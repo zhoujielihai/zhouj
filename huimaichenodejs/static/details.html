@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+      ul{
+          list-style-type: none;
+      }
+    </style>
+</head>
+<body>
+    <ul>
+       图片 <li id="pic"></li>
+       民称 <li id="cname"></li>
+       价格 <li id="price"></li>
+       类别编号<li id="tid"></li>
+    </ul>
+    <a href="carlist.html">返回</a>
+    <script>
+        var cid=location.search.split("=")[1];
+        console.log(cid);
+        var xhr=new XMLHttpRequest();
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState==4&&xhr.status==200){
+                var data=JSON.parse(xhr.responseText);
+                console.log(data);
+                pic.innerHTML=`
+                    <img src="img/${data.pic}">
+                `
+                cname.innerHTML=data.cname;
+                price.innerHTML=data.price;
+                tid.innerHTML=data.tid;
+            }
+        }
+        xhr.open("get","http://127.0.0.1:3000/car/cardetail?cid="+cid,true);
+        xhr.send(null)
+    </script>
+</body>
+</html>
